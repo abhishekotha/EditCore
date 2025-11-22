@@ -8,10 +8,11 @@ import {
   setCursorInline,
   handlePasteText,
   getSelectionCoordinates,
-  OperationsReturnType,
   handleUndoAction,
   handleRndoAction
 } from "./helperFunctions";
+
+import { OperationsReturnType } from "./types";
 import NewTextfeildEachLine ,  { NewTextfeildEachLineRef }  from "./NewTextfeildEachLine";
 
 interface NewTextfeildProps{

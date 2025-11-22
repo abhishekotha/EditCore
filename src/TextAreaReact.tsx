@@ -94,9 +94,9 @@ const TextAreaReact = () =>{
     }
     
     return(
-        <div>
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <h3 style={{ width: '100%', marginBottom: '10px' }}>Text Decorations</h3>
+        <div >
+            <div>
+                <h3 style={{ width: '90%', marginBottom: '10px' }}>Text Decorations</h3><br/>
                 {Object.entries(buttons).map(([label, value]) => {
                     const isActive = (decoraterValue & value) !== 0;
                     return (

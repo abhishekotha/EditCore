@@ -1,68 +1,5 @@
 import React from "react";
-import { undoActionsListprops } from "./NewTextfeild";
-
-export type OperationsReturnType = {
-  updatedData :  string[];
-  action : "PASTE" | "REMOVE" | "INPUT" | "ENTER" | "BACKSPACE" | "TAB" | "NULL";
-  curserPoints : {x : number , y : number};
-  changedText : string;
-  endpoints : {x : number , y : number};
-}
-
-type CursorPosition = {
-  x: number;
-  y: number;
-};
-
-type HandleCharacterInputParams = {
-  key: string;
-  curserPoints: CursorPosition;
-  data: string[];
-};
-
-type HandleEnterInputParams = {
-  data : string[];
-  curserPoints : CursorPosition;
-}
-
-type HandleBackSpaceInputParams = {
-  data : string[];
-  curserPoints : CursorPosition;
-  removeLength? : number;
-}
-
-type HandleBackSpaceRemoveInputParams = {
-  selection: Selection;
-  divRef: HTMLDivElement | null;
-  data: string[];
-}
-
-type HandletabInputOperationParams = {
-  data : string[];
-  curserPoints : CursorPosition;
-}
-
-type HandlePasteOperationParams = {
-  text: string;
-  curserPoints: { x: number; y: number };
-  data: string[];
-}
-
-type HandleUndoActionparams = {
-  undoAction :  undoActionsListprops;
-  data : string[];
-}
-
-type HandleRndoActionparams = {
-  redoAction :  undoActionsListprops;
-  data : string[];
-}
-
-interface HandleRemoveByCoordinatesInputParams {
-  data: string[];
-  start: CursorPosition;
-  end: CursorPosition;
-}
+import * as Types from "./types";
 
 export const findingCurserLocation = ({
     data,
@@ -101,7 +38,7 @@ export const findingCurserLocation = ({
     return -1;
 };
 
-export const handleCharacterInput = ({ key, curserPoints, data }: HandleCharacterInputParams): OperationsReturnType => {
+export const handleCharacterInput = ({ key, curserPoints, data }: Types.HandleCharacterInputParams): Types.OperationsReturnType => {
   const newPoints = { ...curserPoints };
   const updated = [...data];
   
@@ -122,7 +59,7 @@ export const handleCharacterInput = ({ key, curserPoints, data }: HandleCharacte
   };
 };
 
-export const handleEnter = ({data , curserPoints} : HandleEnterInputParams) : OperationsReturnType => {
+export const handleEnter = ({data , curserPoints} : Types.HandleEnterInputParams) : Types.OperationsReturnType => {
   let newPoints = curserPoints;
   const updated = [...data];
   const firstHalf = updated[newPoints.y].slice(0, newPoints.x);
@@ -134,7 +71,7 @@ export const handleEnter = ({data , curserPoints} : HandleEnterInputParams) : Op
 
 };
 
-export const handleBackspace = ({ data, curserPoints , removeLength = 1 }: HandleBackSpaceInputParams): OperationsReturnType => {
+export const handleBackspace = ({ data, curserPoints , removeLength = 1 }: Types.HandleBackSpaceInputParams): Types.OperationsReturnType => {
   let newPoints = curserPoints;
   const updated = [...data];
   let removedData = "";
@@ -163,7 +100,7 @@ export const handleBackspace = ({ data, curserPoints , removeLength = 1 }: Handl
   };
 };
 
-export const handleRemoveText = ({ selection, divRef, data}: HandleBackSpaceRemoveInputParams): OperationsReturnType | null => {
+export const handleRemoveText = ({ selection, divRef, data}: Types.HandleBackSpaceRemoveInputParams): Types.OperationsReturnType | null => {
   if (!divRef) return null;
 
   const range = selection.getRangeAt(0);
@@ -220,7 +157,7 @@ export const handleRemoveText = ({ selection, divRef, data}: HandleBackSpaceRemo
   };
 };
 
-export const handelTabOperation = ({ data , curserPoints } : HandletabInputOperationParams) : OperationsReturnType  =>{
+export const handelTabOperation = ({ data , curserPoints } : Types.HandletabInputOperationParams) : Types.OperationsReturnType  =>{
     let newPoints = curserPoints;
     const tabSpaces = "    ";
     const updated = [...data];
@@ -234,7 +171,7 @@ export const handelTabOperation = ({ data , curserPoints } : HandletabInputOpera
 
 }
 
-export const handleRemoveByCoordinates = ({ data, start, end }: HandleRemoveByCoordinatesInputParams ): OperationsReturnType  => {
+export const handleRemoveByCoordinates = ({ data, start, end }: Types.HandleRemoveByCoordinatesInputParams ): Types.OperationsReturnType  => {
   const updatedData = [...data];
   let removedData = "";
 
@@ -267,7 +204,7 @@ export const handleRemoveByCoordinates = ({ data, start, end }: HandleRemoveByCo
   };
 };
 
-export const handlePasteText = ( { text , curserPoints , data } : HandlePasteOperationParams ): OperationsReturnType | null => {
+export const handlePasteText = ( { text , curserPoints , data } : Types.HandlePasteOperationParams ): Types.OperationsReturnType | null => {
 
   const list = text.split(/\r?\n/);
   const updated = [...data];
@@ -300,7 +237,7 @@ export const handlePasteText = ( { text , curserPoints , data } : HandlePasteOpe
   };
 };
 
-export const handleUndoAction = ({undoAction , data } : HandleUndoActionparams) : OperationsReturnType | null =>{
+export const handleUndoAction = ({undoAction , data } : Types.HandleUndoActionparams) : Types.OperationsReturnType | null =>{
 
   const lastAction = undoAction;
   let result = null;
@@ -334,7 +271,7 @@ export const handleUndoAction = ({undoAction , data } : HandleUndoActionparams) 
   return result;
 }
 
-export const handleRndoAction = ({redoAction , data } : HandleRndoActionparams) : OperationsReturnType | null =>{
+export const handleRndoAction = ({redoAction , data } : Types.HandleRndoActionparams) : Types.OperationsReturnType | null =>{
 
   const lastAction = redoAction;
   let result = null;
